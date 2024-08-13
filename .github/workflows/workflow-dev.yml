@@ -35,11 +35,11 @@ jobs:
           if echo "$RESPONSE" | grep -q '"name"'; then
             CURRENT_TAG=$(echo "$RESPONSE" | jq -r '.[0].name')
             echo "At least one tag exists > $CURRENT_TAG"
-            MAJOR=$(echo "$TAG_NAME" | cut -d. -f1 | sed 's/v//')
+            MAJOR=$(echo "$CURRENT_TAG" | cut -d. -f1 | sed 's/v//')
             echo "Major $MAJOR"
-            MINOR=$(echo "$TAG_NAME" | cut -d. -f2)
+            MINOR=$(echo "$CURRENT_TAG" | cut -d. -f2)
             echo "Minor $MINOR"
-            PATCH=$(echo "$TAG_NAME" | cut -d. -f3)
+            PATCH=$(echo "$CURRENT_TAG" | cut -d. -f3)
             echo "Patch $PATCH"
             # Increment the appropriate version component
             case ${{ github.event.inputs.change_type }} in
