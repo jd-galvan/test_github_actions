@@ -1,11 +1,6 @@
 name: 3. PROD Deploy
 run-name: Executed by ${{ github.actor }} 🔥
 
-on:
-  push:
-    branches:
-      - main
-
 permissions:
   contents: write
 
