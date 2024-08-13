@@ -4,11 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       change_type:
-        type: choice
         description: Change type you have introduced
         required: true
-        type: choice
         default: 'PATCH'
+        type: choice
         options: 
         - MAJOR
         - MINOR
