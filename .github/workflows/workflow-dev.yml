@@ -33,7 +33,8 @@ jobs:
                          "https://api.github.com/repos/${{ github.repository }}/tags")
           TAG_NAME=""
           if echo "$RESPONSE" | grep -q '"name"'; then
-            echo "At least one tag exists"
+            CURRENT_TAG=$(echo "$RESPONSE" | jq -r '.[0].name')
+            echo "At least one tag exists > $CURRENT_TAG"
             MAJOR=$(echo "$TAG_NAME" | cut -d. -f1 | sed 's/v//')
             echo "Major $MAJOR"
             MINOR=$(echo "$TAG_NAME" | cut -d. -f2)
