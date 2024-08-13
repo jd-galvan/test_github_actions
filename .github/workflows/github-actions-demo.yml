@@ -14,6 +14,14 @@ jobs:
       - run: echo "Installing dependencies"
       - run: echo "Run linter"
       - run: echo "Run tests"
+      - name: Create Tag
+        id: create_tag
+        run: |
+          TAG_NAME="v$(date +'%Y%m%d%H%M%S')"
+          git tag $TAG_NAME
+          git push origin $TAG_NAME
+      - name: Output Tag Name
+        run: echo "Tag ${{ steps.create_tag.outputs.tag }} created"
       - run: echo "Build docker image"
       - run: echo "Push docker image"
       - run: echo "🍏 This job's status is ${{ job.status }}."
