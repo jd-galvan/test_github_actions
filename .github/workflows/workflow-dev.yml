@@ -3,19 +3,13 @@ run-name: ${{ github.actor }} executed this event 🤫
 on:
   workflow_dispatch:
     inputs:
-      name:
+      change_type:
         type: choice
-        description: Who to greet
+        description: Change type you have introduced
         options: 
-        - monalisa
-        - cschleiden
-      message:
-        required: true
-      use-emoji:
-        type: boolean
-        description: Include 🎉🤣 emojis
-      environment:
-        type: environment
+        - MAJOR
+        - MINOR
+        - PATCH
 
 permissions: write-all
 jobs:
@@ -24,6 +18,8 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+      - name: Checkout dev branch
+        run: git checkout dev
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - run: echo "Installing dependencies"
       - run: echo "Run linter"
@@ -40,7 +36,7 @@ jobs:
             MINOR=$(echo "$TAG_NAME" | cut -d. -f2)
             PATCH=$(echo "$TAG_NAME" | cut -d. -f3)
             # Increment the appropriate version component
-            case $INCREMENT_VERSION in
+            case ${{ github.event.inputs.change_type }} in
               MAJOR)
                 MAJOR=$(($MAJOR + 1))
                 MINOR=0
