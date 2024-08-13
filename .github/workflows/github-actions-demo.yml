@@ -19,9 +19,15 @@ jobs:
         with:
           fetch-depth: 0
           fetch-tags: true
-      - name: Get latest tag
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get the latest tag
+        id: get_tag
         run: |
+          # Get the latest tag
           LATEST_TAG=$(git describe --tags --abbrev=0)
-          echo "The latest tag $LATEST_TAG"
+          # Output the tag for use in other steps
+          echo "latest-tag=$LATEST_TAG" >> $GITHUB_ENV
+
+      - name: Using the latest tag
+        run: |
+          # Access the latest tag
+          echo "The latest tag is $LATEST_TAG"
