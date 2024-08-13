@@ -1,17 +1,21 @@
-name: GitHub Actions
-run-name: ${{ github.actor }} merge to DEV 🚀
+name: Build Artifact
+run-name: ${{ github.actor }} executed this event 🤫
 on:
   workflow_dispatch:
     inputs:
-      increment_version:
-        description: 'Specify which part of the version to increment (MAJOR, MINOR, PATCH)'
-        required: true
-        default: 'PATCH'
+      name:
         type: choice
-        options:
-          - MAJOR
-          - MINOR
-          - PATCH
+        description: Who to greet
+        options: 
+        - monalisa
+        - cschleiden
+      message:
+        required: true
+      use-emoji:
+        type: boolean
+        description: Include 🎉🤣 emojis
+      environment:
+        type: environment
 
 permissions: write-all
 jobs:
