@@ -72,11 +72,13 @@ jobs:
         run: echo "Build docker image ${{ steps.create_tag.outputs.tag }}"
   Push:
     runs-on: ubuntu-latest
+    needs: [Build]
     steps:
       - name: Push docker image
         run: echo "Push docker image ${{ steps.create_tag.outputs.tag }}"
   Deploy:
     runs-on: ubuntu-latest
+    needs: [Push]
     steps:
       - name: Deploy
         run: echo "Deploy docker image ${{ steps.create_tag.outputs.tag }}"
