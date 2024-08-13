@@ -75,11 +75,11 @@ jobs:
     needs: [Build]
     steps:
       - name: Push docker image
-        run: echo "Push docker image ${{ steps.create_tag.outputs.tag }}"
+        run: echo "Push docker image my_image:${{ needs.Build.outputs.tag }}"
   Deploy:
     runs-on: ubuntu-latest
     needs: [Push]
     steps:
       - name: Deploy
-        run: echo "Deploy docker image ${{ steps.create_tag.outputs.tag }}"
+        run: echo "Deploy docker image my_image:${{ needs.Build.outputs.tag }}"
       - run: echo "🍏 This job's status is ${{ job.status }}."
