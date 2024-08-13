@@ -15,7 +15,7 @@ on:
 
 permissions: write-all
 jobs:
-  Build:
+  Build-Push:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
