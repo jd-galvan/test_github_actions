@@ -1,9 +1,6 @@
 name: GitHub Actions
 run-name: ${{ github.actor }} merge to DEV 🚀
 on:
-  push:
-    branches:
-      - dev
   workflow_dispatch:
     inputs:
       increment_version:
