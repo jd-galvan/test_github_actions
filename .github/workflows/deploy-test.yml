@@ -10,5 +10,5 @@ jobs:
   Deploy:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Deploying my_image:${{ github.event.inputs.change_type }}"
+      - run: echo "Deploying my_image:${{ github.event.inputs.tag }}"
       - run: echo "🍏 This job's status is ${{ job.status }}."
