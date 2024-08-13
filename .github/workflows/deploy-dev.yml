@@ -22,6 +22,9 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
       - name: Checkout dev branch
         run: git checkout dev
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
@@ -31,18 +34,13 @@ jobs:
       - name: Create Tag
         id: create_tag
         run: |
-          RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                         "https://api.github.com/repos/${{ github.repository }}/tags")
+          LATEST_TAG=$(git tag -l | tail -1)
           TAG_NAME=""
-          if echo "$RESPONSE" | grep -q '"name"'; then
-            CURRENT_TAG=$(echo "$RESPONSE" | jq -r '.[0].name')
-            echo "At least one tag exists > $CURRENT_TAG"
-            MAJOR=$(echo "$CURRENT_TAG" | cut -d. -f1 | sed 's/v//')
-            echo "Major $MAJOR"
-            MINOR=$(echo "$CURRENT_TAG" | cut -d. -f2)
-            echo "Minor $MINOR"
-            PATCH=$(echo "$CURRENT_TAG" | cut -d. -f3)
-            echo "Patch $PATCH"
+          if [ -z "$LATEST_TAG" ]; then
+            echo "At least one tag exists > $LATEST_TAG"
+            MAJOR=$(echo "$LATEST_TAG" | cut -d. -f1 | sed 's/v//')
+            MINOR=$(echo "$LATEST_TAG" | cut -d. -f2)
+            PATCH=$(echo "$LATEST_TAG" | cut -d. -f3)
             # Increment the appropriate version component
             case ${{ github.event.inputs.change_type }} in
               MAJOR)
