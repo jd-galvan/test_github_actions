@@ -1,5 +1,5 @@
-name: Build Artifact
-run-name: ${{ github.actor }} executed this event 🤫
+name: Executed by ${{ github.actor }} 🤫
+run-name: Build Artifact
 on:
   workflow_dispatch:
     inputs:
