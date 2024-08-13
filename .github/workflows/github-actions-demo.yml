@@ -21,9 +21,8 @@ jobs:
           TAG_NAME="v$(date +'%Y%m%d%H%M%S')"
           git tag $TAG_NAME
           git push origin $TAG_NAME
-          echo "tag=$TAG_NAME" >> "$GITHUB_OUTPUT"
-          echo "Tag $tag created
+          echo "Tag $TAG_NAME created
       - name: Output Tag Name
-        run: echo "Tag ${{ steps.create_tag.outputs.tag }} created"
+        run: echo "Tag ${{ steps.create_tag.outputs.tag_name }} created"
       - run: echo "Push docker image"
       - run: echo "🍏 This job's status is ${{ job.status }}."
