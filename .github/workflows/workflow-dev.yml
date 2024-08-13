@@ -4,6 +4,20 @@ on:
   push:
     branches:
       - dev
+
+on:
+  workflow_dispatch:
+    inputs:
+      increment_version:
+        description: 'Specify which part of the version to increment (MAJOR, MINOR, PATCH)'
+        required: true
+        default: 'PATCH'
+        type: choice
+        options:
+          - MAJOR
+          - MINOR
+          - PATCH
+
 permissions: write-all
 jobs:
   Build:
@@ -23,7 +37,29 @@ jobs:
           TAG_NAME=""
           if echo "$RESPONSE" | grep -q '"name"'; then
             echo "At least one tag exists"
-            echo "tags_exist=true" >> $GITHUB_ENV
+            MAJOR=$(echo "$TAG_NAME" | cut -d. -f1 | sed 's/v//')
+            MINOR=$(echo "$TAG_NAME" | cut -d. -f2)
+            PATCH=$(echo "$TAG_NAME" | cut -d. -f3)
+            # Increment the appropriate version component
+            case $INCREMENT_VERSION in
+              MAJOR)
+                MAJOR=$(($MAJOR + 1))
+                MINOR=0
+                PATCH=0
+                ;;
+              MINOR)
+                MINOR=$(($MINOR + 1))
+                PATCH=0
+                ;;
+              PATCH)
+                PATCH=$(($PATCH + 1))
+                ;;
+              *)
+                echo "Invalid increment version specified"
+                exit 1
+                ;;
+            esac
+            TAG_NAME="v${MAJOR}.${MINOR}.${PATCH}"
           else
             TAG_NAME="v1.0.0"
           fi
