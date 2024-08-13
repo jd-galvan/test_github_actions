@@ -21,4 +21,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           LATEST_TAG=$(git describe --tags --abbrev=0)
-          echo "latest-tag=$LATEST_TAG" >> "$GITHUB_OUTPUT"
+          echo "The latest tag $LATEST_TAG"
