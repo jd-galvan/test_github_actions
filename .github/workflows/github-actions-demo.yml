@@ -23,12 +23,11 @@ jobs:
         id: get_tag
         run: |
           # Get the latest tag
-          echo "$(git tag)"
-          LATEST_TAG=$(git describe --tags --abbrev=0)
+          LATEST_TAG=$(git tag -l | tail -1)
           # Output the tag for use in other steps
-          echo "latest-tag=$LATEST_TAG" >> $GITHUB_ENV
+          echo "latest-tag=$LATEST_TAG" >> "$GITHUB_OUTPUT"
 
       - name: Using the latest tag
         run: |
           # Access the latest tag
-          echo "The latest tag is $LATEST_TAG"
+          echo "The latest tag is ${{ steps.get_tag.outputs.latest-tag }}"
