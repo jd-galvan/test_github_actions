@@ -5,38 +5,23 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Tag to deploy
+        description: Tag to deploy (e.g., v1.0.0)
         required: true
-        
+
 permissions:
   contents: write
 
 jobs:
-  release:
-    name: Release pushed tag
+  Deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          fetch-tags: true
-      - name: Get the latest tag
-        id: get_tag
-        run: |
-          # Get the latest tag
-          LATEST_TAG=$(git tag -l | tail -1)
-          # Output the tag for use in other steps
-          echo "latest-tag=$LATEST_TAG" >> "$GITHUB_OUTPUT"
-      - name: Using the latest tag
-        run: |
-          # Access the latest tag
-          echo "The latest tag is ${{ steps.get_tag.outputs.latest-tag }}"
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "${{steps.get_tag.outputs.latest-tag}}" \
+          gh release create "${{github.event.inputs.tag}}" \
               --repo="$GITHUB_REPOSITORY" \
-              --title="${{steps.get_tag.outputs.latest-tag}}" \
+              --title="${{github.event.inputs.tag}}" \
               --generate-notes
+      - run: echo "Deploying my_image:${{ github.event.inputs.tag }}"
+      - run: echo "🍏 This job's status is ${{ job.status }}."
