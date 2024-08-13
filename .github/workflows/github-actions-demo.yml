@@ -26,8 +26,13 @@ jobs:
           LATEST_TAG=$(git tag -l | tail -1)
           # Output the tag for use in other steps
           echo "latest-tag=$LATEST_TAG" >> "$GITHUB_OUTPUT"
-
       - name: Using the latest tag
         run: |
           # Access the latest tag
           echo "The latest tag is ${{ steps.get_tag.outputs.latest-tag }}"
+      - name: Create release
+        run: |
+          gh release create "$tag" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${GITHUB_REPOSITORY#*/} ${steps.get_tag.outputs.latest-tag#v}" \
+              --generate-notes
