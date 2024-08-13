@@ -32,7 +32,7 @@ jobs:
           echo "The latest tag is ${{ steps.get_tag.outputs.latest-tag }}"
       - name: Create release
         run: |
-          gh release create "${steps.get_tag.outputs.latest-tag}" \
+          gh release create "${{steps.get_tag.outputs.latest-tag}}" \
               --repo="$GITHUB_REPOSITORY" \
               --title="${GITHUB_REPOSITORY#*/} ${steps.get_tag.outputs.latest-tag#v}" \
               --generate-notes
