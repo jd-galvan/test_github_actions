@@ -6,6 +6,9 @@ on:
       change_type:
         type: choice
         description: Change type you have introduced
+        required: true
+        type: choice
+        default: 'PATCH'
         options: 
         - MAJOR
         - MINOR
