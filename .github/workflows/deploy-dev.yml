@@ -38,6 +38,9 @@ jobs:
           echo "$LATEST_TAG"
           TAG_NAME=""
           if [ -z "$LATEST_TAG" ]; then
+            echo "Theres no a tag"
+            TAG_NAME="v1.0.0"
+          else
             echo "At least one tag exists > $LATEST_TAG"
             MAJOR=$(echo "$LATEST_TAG" | cut -d. -f1 | sed 's/v//')
             MINOR=$(echo "$LATEST_TAG" | cut -d. -f2)
@@ -62,9 +65,6 @@ jobs:
                 ;;
             esac
             TAG_NAME="v${MAJOR}.${MINOR}.${PATCH}"
-          else
-            echo "Theres no a tag"
-            TAG_NAME="v1.0.0"
           fi
           git tag $TAG_NAME
           git push origin $TAG_NAME
