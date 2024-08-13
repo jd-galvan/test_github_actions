@@ -31,6 +31,8 @@ jobs:
           # Access the latest tag
           echo "The latest tag is ${{ steps.get_tag.outputs.latest-tag }}"
       - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create "${{steps.get_tag.outputs.latest-tag}}" \
               --repo="$GITHUB_REPOSITORY" \
