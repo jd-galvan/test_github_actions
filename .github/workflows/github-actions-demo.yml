@@ -1,0 +1,22 @@
+name: Prod Deploy
+run-name: ${{ github.actor }} merge to PROD 🚀
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Release pushed tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get latest tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          LATEST_TAG=$(git describe --tags --abbrev=0)
+          echo "latest-tag=$LATEST_TAG" >> "$GITHUB_OUTPUT"
