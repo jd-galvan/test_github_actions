@@ -35,6 +35,7 @@ jobs:
         id: create_tag
         run: |
           LATEST_TAG=$(git tag -l | tail -1)
+          echo "$LATEST_TAG"
           TAG_NAME=""
           if [ -z "$LATEST_TAG" ]; then
             echo "At least one tag exists > $LATEST_TAG"
