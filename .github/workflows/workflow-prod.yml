@@ -1,0 +1,40 @@
+name: Prod Deploy
+run-name: ${{ github.actor }} merge to PROD 🚀
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Release pushed tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - name: Get the latest tag
+        id: get_tag
+        run: |
+          # Get the latest tag
+          LATEST_TAG=$(git tag -l | tail -1)
+          # Output the tag for use in other steps
+          echo "latest-tag=$LATEST_TAG" >> "$GITHUB_OUTPUT"
+      - name: Using the latest tag
+        run: |
+          # Access the latest tag
+          echo "The latest tag is ${{ steps.get_tag.outputs.latest-tag }}"
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{steps.get_tag.outputs.latest-tag}}" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${{steps.get_tag.outputs.latest-tag}}" \
+              --generate-notes
