@@ -1,4 +1,4 @@
-name: Deploy to TEST
+name: 2. TEST Deploy
 run-name: Executed by ${{ github.actor }} 🔍
 on:
   push:

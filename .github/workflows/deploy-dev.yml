@@ -1,4 +1,4 @@
-name: Build and Deploy to DEV
+name: 1. Build and Deploy to DEV
 run-name: Executed by ${{ github.actor }} 🚀
 on:
   workflow_dispatch:
