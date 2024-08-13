@@ -1,5 +1,5 @@
-name: GitHub Actions
-run-name: ${{ github.actor }} merge to TEST 🚀
+name: Deploy to TEST
+run-name: Executed by ${{ github.actor }} 🔍
 on:
   push:
     branches:

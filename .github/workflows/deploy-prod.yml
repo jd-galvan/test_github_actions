@@ -1,5 +1,5 @@
 name: Prod Deploy
-run-name: ${{ github.actor }} merge to PROD 🚀
+run-name: Executed by ${{ github.actor }} 🔥
 
 on:
   push:

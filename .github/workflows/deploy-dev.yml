@@ -1,5 +1,5 @@
-name: Build Artifact
-run-name: Building executed by ${{ github.actor }} 🤫
+name: Build and Deploy to DEV
+run-name: Executed by ${{ github.actor }} 🚀
 on:
   workflow_dispatch:
     inputs:
@@ -15,7 +15,7 @@ on:
 
 permissions: write-all
 jobs:
-  Build-Push:
+  Build:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -70,6 +70,12 @@ jobs:
           echo "tag=$TAG_NAME" >> "$GITHUB_OUTPUT"
       - name: Build docker image
         run: echo "Build docker image ${{ steps.create_tag.outputs.tag }}"
+  Push:
+    steps:
       - name: Push docker image
         run: echo "Push docker image ${{ steps.create_tag.outputs.tag }}"
+  Push:
+    steps:
+      - name: Deploy
+        run: echo "Deploy docker image ${{ steps.create_tag.outputs.tag }}"
       - run: echo "🍏 This job's status is ${{ job.status }}."
