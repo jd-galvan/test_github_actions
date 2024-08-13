@@ -21,8 +21,8 @@ jobs:
           TAG_NAME="v$(date +'%Y%m%d%H%M%S')"
           git tag $TAG_NAME
           git push origin $TAG_NAME
+          echo "Tag $TAG_NAME created
       - name: Output Tag Name
-        run: echo "Tag ${{ steps.create_tag.outputs.tag }} created"
-      - run: echo "Build docker image"
+        run: echo "Tag ${{ steps.create_tag.outputs }} created"
       - run: echo "Push docker image"
       - run: echo "🍏 This job's status is ${{ job.status }}."
