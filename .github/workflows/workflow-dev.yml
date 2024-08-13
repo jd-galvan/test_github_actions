@@ -35,8 +35,11 @@ jobs:
           if echo "$RESPONSE" | grep -q '"name"'; then
             echo "At least one tag exists"
             MAJOR=$(echo "$TAG_NAME" | cut -d. -f1 | sed 's/v//')
+            echo "Major $MAJOR"
             MINOR=$(echo "$TAG_NAME" | cut -d. -f2)
+            echo "Minor $MINOR"
             PATCH=$(echo "$TAG_NAME" | cut -d. -f3)
+            echo "Patch $PATCH"
             # Increment the appropriate version component
             case ${{ github.event.inputs.change_type }} in
               MAJOR)
