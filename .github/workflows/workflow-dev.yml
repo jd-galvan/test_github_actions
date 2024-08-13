@@ -1,0 +1,30 @@
+name: GitHub Actions
+run-name: ${{ github.actor }} merge to DEV 🚀
+on:
+  push:
+    branches:
+      - dev
+permissions: write-all
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "Installing dependencies"
+      - run: echo "Run linter"
+      - run: echo "Run tests"
+      - name: Create Tag
+        id: create_tag
+        run: |
+          TAG_NAME="v$(date +'%Y%m%d%H%M%S')"
+          git tag $TAG_NAME
+          git push origin $TAG_NAME
+          echo "Tag $TAG_NAME created"
+          echo "tag=$TAG_NAME" >> "$GITHUB_OUTPUT"
+      - name: Build docker image
+        run: echo "Build docker image ${{ steps.create_tag.outputs.tag }}"
+      - name: Push docker image
+        run: echo "Push docker image ${{ steps.create_tag.outputs.tag }}"
+      - run: echo "🍏 This job's status is ${{ job.status }}."
