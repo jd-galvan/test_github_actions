@@ -63,6 +63,7 @@ jobs:
             esac
             TAG_NAME="v${MAJOR}.${MINOR}.${PATCH}"
           else
+            echo "Theres no a tag"
             TAG_NAME="v1.0.0"
           fi
           git tag $TAG_NAME
