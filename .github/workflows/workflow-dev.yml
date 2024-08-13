@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - dev
-
-on:
   workflow_dispatch:
     inputs:
       increment_version:
